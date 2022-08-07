@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TDL</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+</head>
+<body class="body">
+
+    <h1 class="title">todos</h1>
+
+    <div class="root">
+        <form class="task">
+            <input class="task__input" placeholder="what needs to be done?" type="text" name="username" minlength="1" maxlength="50">
+            <button type="submit" class="task__btn">add</button>
+        </form>
+
+        <ul class="task__list">
+            <!-- таски вносятся сюда-->
+        </ul>
+        <button type="button" class="del-btn">delete all</button>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

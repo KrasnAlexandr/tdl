@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.body {
+    width: 100%;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    max-width: 768px;
+    min-width: 768px;
+    border: 1px solid red;
+    border-radius: 15px;
+}
+
+.title {
+    margin: 0 0 22px 0;
+    padding: 0;
+    font-size: 44px;
+    font-style: normal;
+}
+
+.task {
+    margin: 10px 0 10px 0;
+    width: 80%;
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task__input {
+    min-width: 80%;
+    border-radius: 4px;
+    padding-left: 5px;
+}
+
+.task__input:active {
+    outline: none;
+}
+
+.task__btn {
+    width: 18%;
+    border-radius: 4px;
+    background-color: rgb(124, 227, 123, 0.5);
+}
+
+.task__btn:hover{
+    cursor:pointer;
+    opacity:.6;
+}
+
+
+.task__list {
+    height: 444px;
+    width: 80%;
+    border: 1px solid red;
+    overflow: auto;
+}
+
+.task__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    height: 15%;
+    overflow: auto;
+    margin: 0 15px 0 15px;
+}
+
+.task__item {
+
+}
+
+.task__deleted {
+    min-width: 44px;
+    height: 44px;
+    background-image: url("bg-close-button.svg");
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.task__deleted:hover{
+    cursor:pointer;
+    opacity:.6;
+}
+
+.del-btn {
+    margin: 10px 0 10px 0;
+    width: 44%;
+    height: 44px;
+    border-radius: 4px;
+    background-color: rgb(255, 0, 0, 0.5);
+}
+
+.del-btn:hover{
+    cursor:pointer;
+    opacity:.6;
+}
+
+.hidden {
+    background-color: black;
+}
