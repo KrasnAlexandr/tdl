@@ -1,38 +1,33 @@
 const taskForm = document.querySelector('.task'); //форм тасков
 const taskInput = document.querySelector('.task__input'); // инпут заданий
 
+const taskList = document.querySelector('.task__list'); // ul (контейнер) тасков
 
-const taskList = document.querySelector('.task__list'); // ul (обертка) тасков
-const task = taskList.querySelectorAll('.task__items'); // таск который добавляется
-
-
-const delTask = document.querySelector('.task__deleted'); // кнопка удаления таска
 const cleaningList = document.querySelector('.del-btn'); // кнопка удаления ВСЕХ тасков
 
-let array = []; // массив для тасков
+let mainArray = []; // массив для тасков
 
-renderTask (array, taskList);
+renderTask();
 
 
-function addTask (evt) {
+function addTask (evt, index) {
     evt.preventDefault();
 
     if (taskInput.value.length >= 1) {
-        array.push(taskInput.value);
-
-        taskInput.value = '';
+        mainArray.push(taskInput.value);
+        renderTask();
     }
 
-    renderTask(array, taskList);
+    taskInput.value = '';
 }
 
 function deleteAll() {
-    array.splice(0,array.length);
+    mainArray.splice(0,mainArray.length);
 
-    renderTask(array, taskList);
+    renderTask();
 }
 
-function renderTask (array, container) {
+function renderTask (array = mainArray, container = taskList) {
     let htmlTasks = '';
 
     if (array.length > 0) {
@@ -42,7 +37,14 @@ function renderTask (array, container) {
     }
 
     for (let i = 0; i < array.length; i++) {
-        htmlTasks += `<div class="task__items"><li class="task__item">${array[i]}</li><button type="button" class="task__deleted" onclick="deleteTask(${i})"></button></div>`;
+        htmlTasks += `<div class="task__items" id="task__div_${i}">
+                         <li class="task__item" contenteditable="true">${array[i]}</li>
+                         <input class="task__input hidden-item" type="text">
+                         <div class="button__container">
+                             <button type="button" class="task__edit" onclick="editTask(${i})"></button>
+                             <button type="button" class="task__deleted" onclick="deleteTask(${i})"></button>
+                         </div>
+                       </div>`;
     }
 
     container.innerHTML = htmlTasks;
@@ -51,16 +53,37 @@ function renderTask (array, container) {
 function deleteTask (index) {
     let resultArray = [];
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < mainArray.length; i++) {
         if (index !== i) {
-            resultArray.push(array[i]);
+            resultArray.push(mainArray[i]);
         }
     }
 
-    array = resultArray;
+    mainArray = resultArray;
 
-    renderTask(array, taskList);
+    renderTask();
 }
+
+function editTask (index) {
+
+    const idItem = document.querySelector(`#task__div_${index}`);
+    const indexTextContent = idItem.querySelector('.task__item');
+    const indexInput = idItem.querySelector('.task__input');
+
+    if (!indexTextContent.classList.contains('hidden-item')) {
+        indexInput.value = indexTextContent.textContent;
+        indexTextContent.classList.toggle('hidden-item');
+        indexInput.classList.toggle('hidden-item');
+    } else {
+        indexTextContent.classList.toggle('hidden-item');
+        indexInput.classList.toggle('hidden-item');
+        indexTextContent.textContent = indexInput.value;
+        console.log(indexInput.value)
+    }
+
+}
+
+
 
 taskForm.addEventListener('submit', addTask);
 cleaningList.addEventListener('click', deleteAll);
