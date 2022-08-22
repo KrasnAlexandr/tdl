@@ -78,7 +78,6 @@ function editTask (index) {
         indexTextContent.classList.toggle('hidden-item');
         indexInput.classList.toggle('hidden-item');
         indexTextContent.textContent = indexInput.value;
-        console.log(indexInput.value)
     }
 
 }
