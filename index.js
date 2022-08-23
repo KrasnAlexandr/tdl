@@ -10,7 +10,7 @@ let mainArray = []; // массив для тасков
 renderTask();
 
 
-function addTask (evt, index) {
+function addTask (evt) {
     evt.preventDefault();
 
     if (taskInput.value.length >= 1) {
