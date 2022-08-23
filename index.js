@@ -76,8 +76,8 @@ function editTask (index) {
 
     if (!indexTextContent.classList.contains('hidden-item')) {
         indexInput.value = indexTextContent.textContent;
-        indexTextContent.classList.toggle('hidden-item');
-        indexInput.classList.toggle('hidden-item');
+        indexTextContent.classList.add('hidden-item');
+        indexInput.classList.remove('hidden-item');
         indexInput.focus()
         editButton.style.backgroundImage = 'url(bg-close-button.svg)';
     } else {
