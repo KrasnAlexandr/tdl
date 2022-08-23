@@ -7,27 +7,9 @@ const cleaningList = document.querySelector('.del-btn'); // кнопка уда�
 
 let mainArray = []; // массив для тасков
 
+
 renderTask();
 
-
-function addTask (evt) {
-    evt.preventDefault();
-
-    if (taskInput.value.length >= 1) {
-        mainArray.push(taskInput.value);
-        renderTask();
-    }
-
-    taskInput.value = '';
-}
-
-function deleteAll() {
-    mainArray.splice(0,mainArray.length);
-
-    taskInput.value = '';
-
-    renderTask();
-}
 
 function renderTask (array = mainArray, container = taskList) {
     let htmlTasks = '';
@@ -50,6 +32,25 @@ function renderTask (array = mainArray, container = taskList) {
     }
 
     container.innerHTML = htmlTasks;
+}
+
+function addTask (evt) {
+    evt.preventDefault();
+
+    if (taskInput.value.length >= 1) {
+        mainArray.push(taskInput.value);
+        renderTask();
+    }
+
+    taskInput.value = '';
+}
+
+function deleteAll() {
+    mainArray.splice(0,mainArray.length);
+
+    taskInput.value = '';
+
+    renderTask();
 }
 
 function deleteTask (index) {
@@ -92,7 +93,6 @@ function editTask (index) {
     });
 
 }
-
 
 
 taskForm.addEventListener('submit', addTask);
