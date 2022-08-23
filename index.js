@@ -24,6 +24,8 @@ function addTask (evt) {
 function deleteAll() {
     mainArray.splice(0,mainArray.length);
 
+    taskInput.value = '';
+
     renderTask();
 }
 
