@@ -82,6 +82,13 @@ function editTask (index) {
         renderTask()
     }
 
+    indexInput.addEventListener('keydown', function(evt) {
+        if (evt.keyCode === 13) {
+            mainArray[index] = indexInput.value;
+            renderTask()
+        }
+    });
+
 }
 
 
