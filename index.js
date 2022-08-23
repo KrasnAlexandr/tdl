@@ -69,11 +69,13 @@ function editTask (index) {
     const idItem = document.querySelector(`#task__div_${index}`);
     const indexTextContent = idItem.querySelector('.task__item');
     const indexInput = idItem.querySelector('.task__input');
+    const editButton = idItem.querySelector('.task__edit');
 
     if (!indexTextContent.classList.contains('hidden-item')) {
         indexInput.value = indexTextContent.textContent;
         indexTextContent.classList.toggle('hidden-item');
         indexInput.classList.toggle('hidden-item');
+        editButton.style.backgroundImage = 'url(bg-close-button.svg)';
     } else {
         indexTextContent.classList.toggle('hidden-item');
         indexInput.classList.toggle('hidden-item');
