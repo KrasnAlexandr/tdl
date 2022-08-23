@@ -38,7 +38,7 @@ function renderTask (array = mainArray, container = taskList) {
 
     for (let i = 0; i < array.length; i++) {
         htmlTasks += `<div class="task__items" id="task__div_${i}">
-                         <li class="task__item" contenteditable="true">${array[i]}</li>
+                         <li class="task__item">${array[i]}</li>
                          <input class="task__input hidden-item" type="text">
                          <div class="button__container">
                              <button type="button" class="task__edit" onclick="editTask(${i})"></button>
