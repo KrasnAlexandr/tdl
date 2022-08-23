@@ -78,8 +78,6 @@ function editTask (index) {
         indexInput.focus()
         editButton.style.backgroundImage = 'url(bg-close-button.svg)';
     } else {
-        indexTextContent.classList.toggle('hidden-item');
-        indexInput.classList.toggle('hidden-item');
         mainArray[index] = indexInput.value;
         renderTask()
     }
