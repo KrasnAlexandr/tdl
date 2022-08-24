@@ -96,6 +96,7 @@ function editTask (taskIndex) {
         editButton.style.backgroundImage = 'url()';
         editButton.textContent = 'ok';
         editButton.style.color = 'green';
+
     } else {
         mainArray[taskIndex].text = indexInput.value;
 
@@ -116,6 +117,7 @@ function editTask (taskIndex) {
 
             checkBox.classList.remove('hidden-item');
         }
+
         if (evt.keyCode === 27) {
             indexTextContent.classList.remove('hidden-item');
             indexInput.classList.add('hidden-item');
@@ -141,6 +143,7 @@ function doneTask (taskIndex) {
 
             indexTextContent.style.color = 'red';
             indexTextContent.style.textDecoration = 'line-through';
+
         } else {
             mainArray[taskIndex].done = false;
 
