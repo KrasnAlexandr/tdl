@@ -107,7 +107,9 @@ function editTask (taskIndex) {
         checkBox.classList.add('hidden-item');
         indexInput.classList.remove('hidden-item');
         indexInput.focus()
-        editButton.style.backgroundImage = 'url(bg-close-button.svg)';
+        editButton.style.backgroundImage = 'url()'
+        editButton.textContent = 'ok';
+        editButton.style.color = 'green'
     } else {
         mainArray[taskIndex].text = indexInput.value;
         taskList.innerHTML = '';
