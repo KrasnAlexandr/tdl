@@ -15,16 +15,16 @@ function addTask (evt) {
     evt.preventDefault();
 
     if (taskInput.value.length >= 1) {
-        const newTask = { text: taskInput.value, complete: false  };
+        const newTask = { text: taskInput.value, done: false  };
         mainArray.push(newTask);
-        renderHTML(renderTask(newTask.text, mainArray.length - 1, newTask.complete));
+        renderHTML(renderTask(newTask.text, mainArray.length - 1, newTask.done));
     }
 
     taskInput.value = '';  // я хз куда его запихнуть
 }
 
 // создание обертки таска
-function renderTask (taskText, taskIndex, taskComplete) {
+function renderTask (taskText, taskIndex, status) {
 
     const newTask = templateElement.cloneNode(true);
 
@@ -34,11 +34,11 @@ function renderTask (taskText, taskIndex, taskComplete) {
     newTask.querySelector('.task__items').setAttribute('id', `task__id_${taskIndex}`);
     newTask.querySelector('.task__deleted').setAttribute('onclick',`deleteTask(${taskIndex})`);
     newTask.querySelector('.task__edit').setAttribute('onclick',`editTask(${taskIndex})`);
-    newTask.querySelector('.task__checkbox').setAttribute('onclick',`completeTask(${taskIndex})`);
+    newTask.querySelector('.task__checkbox').setAttribute('onclick',`doneTask(${taskIndex})`);
 
     const checkBox = newTask.querySelector('.task__checkbox');
 
-    if (taskComplete) {
+    if (status) {
         checkBox.setAttribute('checked', 'checked');
         paragraph.style.color = 'red';
         paragraph.style.textDecoration = 'line-through';
@@ -72,7 +72,7 @@ function deleteTask (taskIndex) {
 
     taskList.innerHTML = '';
 
-    mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
+    mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
 }
 
 // редактировать конкретный таск
@@ -103,7 +103,7 @@ function editTask (taskIndex) {
 
         taskList.innerHTML = '';
 
-        mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
+        mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
 
         checkBox.classList.remove('hidden-item');
     }
@@ -114,20 +114,24 @@ function editTask (taskIndex) {
 
             taskList.innerHTML = '';
 
-            mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
+            mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
 
             checkBox.classList.remove('hidden-item');
         }
         if (evt.keyCode === 27) {
             indexTextContent.classList.remove('hidden-item');
             indexInput.classList.add('hidden-item');
+
             checkBox.classList.remove('hidden-item');
+
+            editButton.style.backgroundImage = 'url(bg-edit-button.svg)';
+            editButton.textContent = '';
         }
     });
 }
 
 // чекбокс таска
-function completeTask (taskIndex) {
+function doneTask (taskIndex) {
 
     const idItem = document.querySelector(`#task__id_${taskIndex}`);
     const indexTextContent = idItem.querySelector('.task__text');
@@ -135,12 +139,12 @@ function completeTask (taskIndex) {
 
     checkBox.addEventListener('change', function () {
         if (checkBox.checked) {
-            mainArray[taskIndex].complete = true;
+            mainArray[taskIndex].done = true;
 
             indexTextContent.style.color = 'red';
             indexTextContent.style.textDecoration = 'line-through';
         } else {
-            mainArray[taskIndex].complete = false;
+            mainArray[taskIndex].done = false;
 
             indexTextContent.style.color = 'white';
             indexTextContent.style.textDecoration = 'none';
