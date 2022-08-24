@@ -10,7 +10,7 @@ const templateElement = document.querySelector('.template').content; // шабл
 let mainArray = []; // массив для тасков
 
 
-// добавление таска в лист
+// добавление таска в список
 function addTask (evt) {
     evt.preventDefault();
 
@@ -45,7 +45,7 @@ function renderTask (taskText, taskIndex, taskStatus) {
     return newTask;
 }
 
-// добавление таска в DOM
+// добавление таска в контейнер
 function renderHTML (task, container = taskList) {
     container.prepend(task);
 }
