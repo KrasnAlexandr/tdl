@@ -155,4 +155,3 @@ function doneTask (taskIndex) {
 
 taskForm.addEventListener('submit', addTask);  // кнопка добавление
 cleaningList.addEventListener('click', deleteAll); // кнопка удаления всего
-
