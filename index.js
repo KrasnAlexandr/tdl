@@ -21,14 +21,15 @@ function renderTask (array = mainArray, container = taskList) {
     }
 
     for (let i = 0; i < array.length; i++) {
-        htmlTasks += `<div class="task__items" id="task__div_${i}">
-                         <li class="task__item">${array[i]}</li>
+        htmlTasks += `<li class="task__items" id="task__div_${i}">
+                         <p class="task__item">${array[i]}</p>
                          <input class="task__input hidden-item" type="text">
                          <div class="button__container">
+                             <input type="checkbox" class="task__checkbox" onclick="completeTask(${i})">
                              <button type="button" class="task__edit" onclick="editTask(${i})"></button>
                              <button type="button" class="task__deleted" onclick="deleteTask(${i})"></button>
                          </div>
-                       </div>`;
+                       </li>`;
     }
 
     container.innerHTML = htmlTasks;
@@ -74,6 +75,7 @@ function editTask (index) {
     const indexInput = idItem.querySelector('.task__input');
     const editButton = idItem.querySelector('.task__edit');
 
+
     if (!indexTextContent.classList.contains('hidden-item')) {
         indexInput.value = indexTextContent.textContent;
         indexTextContent.classList.add('hidden-item');
@@ -90,9 +92,23 @@ function editTask (index) {
             mainArray[index] = indexInput.value;
             renderTask()
         }
+        if (evt.keyCode === 27) {
+            indexTextContent.classList.remove('hidden-item');
+            indexInput.classList.add('hidden-item');
+        }
     });
-
 }
+
+/*function completeTask (index) {
+
+    const idItem = document.querySelector(`#task__div_${index}`);
+    const indexTextContent = idItem.querySelector('.task__item');
+    const checkBox = idItem.querySelector('.task__checkbox');
+
+    checkBox.addEventListener('click', function () {
+        indexTextContent.style.color = 'red';
+    })
+}*/
 
 
 taskForm.addEventListener('submit', addTask);

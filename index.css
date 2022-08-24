@@ -85,16 +85,28 @@
 }
 
 .task__item {
-
+    color: white;
 }
 
 .hidden-item {
     display: none;
 }
 
+.task__checkbox {
+    min-width: 44px;
+    height: 44px;
+}
+
+.task__checkbox:hover {
+    cursor:pointer;
+    border: 0;
+    outline: 2px solid green;
+}
+
 .task__input {
     width: 40%;
 }
+
 
 .task__deleted {
     min-width: 44px;
