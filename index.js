@@ -7,15 +7,24 @@ const cleaningList = document.querySelector('.del-btn'); // кнопка уда�
 
 const templateElement = document.querySelector('.template').content; // шаблон
 
-let mainArray = []; // массив для тасков
+let mainArray = [
+    { text: 'Я сделал имитацию подачи тасков', done: false },
+    { text: 'как вроде они пришли с сервера', done: true }
+]; // массив для тасков
 
+renderAllTasks(mainArray);
+
+// т.к. у тасков меняется индекс после удаления, необходимо обновлять лист (я думаю, смогу ее переиспользовать, для создания списка задач под разные дела, например рабочие или домашние)
+function renderAllTasks (array) {
+    array.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)))
+}
 
 // добавление таска в список
 function addTask (evt) {
     evt.preventDefault();
 
     if (taskInput.value.length >= 1) {
-        const newTask = { text: taskInput.value, done: false  };
+        const newTask = { text: taskInput.value, done: false };
         mainArray.push(newTask);
         renderHTML(renderTask(newTask.text, mainArray.length - 1, newTask.done));
     }
@@ -23,9 +32,10 @@ function addTask (evt) {
     taskInput.value = '';  // я хз куда его запихнуть
 }
 
+
+
 // создание обертки таска
 function renderTask (taskText, taskIndex, taskStatus) {
-
     const newTask = templateElement.cloneNode(true);
 
     const paragraph = newTask.querySelector('.task__text');
@@ -70,12 +80,11 @@ function deleteTask (taskIndex) {
 
     taskList.innerHTML = '';
 
-    mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
+    renderAllTasks(mainArray);
 }
 
 // редактировать конкретный таск
 function editTask (taskIndex) {
-
     const idItem = document.querySelector(`#task__id_${taskIndex}`);
     const indexTextContent = idItem.querySelector('.task__text');
     const indexInput = idItem.querySelector('.task__input');
@@ -83,11 +92,9 @@ function editTask (taskIndex) {
     const checkBox = idItem.querySelector('.task__checkbox');
 
     if (!indexTextContent.classList.contains('hidden-item')) {
-
         indexInput.value = indexTextContent.textContent;
 
         indexTextContent.classList.add('hidden-item');
-
         checkBox.classList.add('hidden-item');
 
         indexInput.classList.remove('hidden-item');
@@ -95,27 +102,43 @@ function editTask (taskIndex) {
 
         editButton.style.backgroundImage = 'url()';
         editButton.textContent = 'ok';
-        editButton.style.color = 'green';
 
     } else {
         mainArray[taskIndex].text = indexInput.value;
+        indexTextContent.textContent = mainArray[taskIndex].text;
 
-        taskList.innerHTML = '';
+        indexTextContent.classList.remove('hidden-item');
+        checkBox.classList.remove('hidden-item');
 
-        mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
+        indexInput.classList.add('hidden-item');
 
         checkBox.classList.remove('hidden-item');
+
+        editButton.style.backgroundImage = 'url(bg-edit-button.svg)';
+        editButton.textContent = '';
+
+        console.log(mainArray[taskIndex])
+        console.log(mainArray)
     }
 
-    indexInput.addEventListener('keydown', function(evt) {
+
+    // если выводить в консоль, изменения после нажатия кнопки, то почему то очень много выводит сообщений после кнопки ну и ругается на дублирование, но все работает
+    indexInput.addEventListener('keyup', function(evt) {
         if (evt.keyCode === 13) {
             mainArray[taskIndex].text = indexInput.value;
+            indexTextContent.textContent = mainArray[taskIndex].text;
 
-            taskList.innerHTML = '';
+            indexTextContent.classList.remove('hidden-item');
+            checkBox.classList.remove('hidden-item');
 
-            mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.done)));
+            indexInput.classList.add('hidden-item');
 
             checkBox.classList.remove('hidden-item');
+
+            editButton.style.backgroundImage = 'url(bg-edit-button.svg)';
+            editButton.textContent = '';
+            console.log(mainArray[taskIndex])
+            console.log(mainArray)
         }
 
         if (evt.keyCode === 27) {
@@ -132,7 +155,6 @@ function editTask (taskIndex) {
 
 // чекбокс таска
 function doneTask (taskIndex) {
-
     const idItem = document.querySelector(`#task__id_${taskIndex}`);
     const indexTextContent = idItem.querySelector('.task__text');
     const checkBox = idItem.querySelector('.task__checkbox');

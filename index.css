@@ -127,6 +127,7 @@
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
+    color: green;
 }
 
 .task__edit:hover{
