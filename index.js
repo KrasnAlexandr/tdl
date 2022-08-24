@@ -17,7 +17,7 @@ function addTask (evt) {
     if (taskInput.value.length >= 1) {
         const newTask = { text: taskInput.value, complete: false  };
         mainArray.push(newTask);
-        renderHTML(renderTask(newTask.text, counterIndex(), newTask.complete));
+        renderHTML(renderTask(newTask.text, mainArray.length - 1, newTask.complete));
     }
 
     taskInput.value = '';  // я хз куда его запихнуть
@@ -50,17 +50,6 @@ function renderTask (taskText, taskIndex, taskComplete) {
 // добавление таска в DOM
 function renderHTML (task, container = taskList) {
     container.prepend(task);
-}
-
-// счетчик для индекса  (вообще можно заменить на (mainArray.length - 1))
-function counterIndex () {
-    let taskIndex = 0;
-
-    for (let i = 0; i < mainArray.length; i++) {
-        taskIndex = i;
-    }
-
-    return taskIndex;
 }
 
 // удалить всё
