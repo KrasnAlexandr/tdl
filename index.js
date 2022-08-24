@@ -36,10 +36,8 @@ function renderTask (taskText, taskIndex, taskStatus) {
     newTask.querySelector('.task__edit').setAttribute('onclick',`editTask(${taskIndex})`);
     newTask.querySelector('.task__checkbox').setAttribute('onclick',`doneTask(${taskIndex})`);
 
-    const checkBox = newTask.querySelector('.task__checkbox');
-
     if (taskStatus) {
-        checkBox.setAttribute('checked', 'checked');
+        newTask.querySelector('.task__checkbox').setAttribute('checked', 'checked');
         paragraph.style.color = 'red';
         paragraph.style.textDecoration = 'line-through';
     }
