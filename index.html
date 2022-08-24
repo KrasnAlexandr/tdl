@@ -12,21 +12,35 @@
 </head>
 <body class="body">
 
-<h1 class="title">todos</h1>
+    <h1 class="title">todos</h1>
 
-<div class="root">
-    <form class="task">
-        <input class="task__input" placeholder="what needs to be done?" type="text" name="username" minlength="1" maxlength="50">
-        <button type="submit" class="task__btn">add</button>
-    </form>
+    <div class="root">
+        <form class="task">
+            <input class="task__input" placeholder="what needs to be done?" type="text" name="username" minlength="1" maxlength="50">
+            <button type="submit" class="task__btn">add</button>
+        </form>
 
-    <ul class="task__list">
-        <!-- таски вносятся сюда-->
-    </ul>
-    <button type="button" class="del-btn">delete all</button>
-</div>
+        <ul class="task__list">
+            <!-- таски вносятся сюда-->
+        </ul>
 
-<script src="index.js"></script>
+        <template class="template">
+            <li class="task__items" id="task__id_${idTask}">
+                <p class="task__text"></p>
+                <input class="task__input hidden-item" type="text">
+                <div class="button__container">
+                    <input type="checkbox" class="task__checkbox" onclick="completeTask(${idTask})">
+                    <button type="button" class="task__edit" onclick="editTask(${idTask})"></button>
+                    <button type="button" class="task__deleted" onclick="deleteTask(${idTask})"></button>
+                </div>
+            </li>
+        </template>
+
+        <button type="button" class="del-btn">delete all</button>
+    </div>
+
+    <script src="index.js"></script>
+
 </body>
 </html>
 

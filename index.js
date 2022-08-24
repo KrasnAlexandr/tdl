@@ -5,111 +5,152 @@ const taskList = document.querySelector('.task__list'); // ul (контейне�
 
 const cleaningList = document.querySelector('.del-btn'); // кнопка удаления ВСЕХ тасков
 
+const templateElement = document.querySelector('.template').content;
+
 let mainArray = []; // массив для тасков
 
 
-renderTask();
-
-
-function renderTask (array = mainArray, container = taskList) {
-    let htmlTasks = '';
-
-    if (array.length > 0) {
-        cleaningList.classList.remove('hidden');
-    } else {
-        cleaningList.classList.add('hidden');
-    }
-
-    for (let i = 0; i < array.length; i++) {
-        htmlTasks += `<li class="task__items" id="task__div_${i}">
-                         <p class="task__item">${array[i]}</p>
-                         <input class="task__input hidden-item" type="text">
-                         <div class="button__container">
-                             <input type="checkbox" class="task__checkbox" onclick="completeTask(${i})">
-                             <button type="button" class="task__edit" onclick="editTask(${i})"></button>
-                             <button type="button" class="task__deleted" onclick="deleteTask(${i})"></button>
-                         </div>
-                       </li>`;
-    }
-
-    container.innerHTML = htmlTasks;
-}
-
+// добавление таска
 function addTask (evt) {
     evt.preventDefault();
 
     if (taskInput.value.length >= 1) {
-        mainArray.push(taskInput.value);
-        renderTask();
+        const newTask = { text: taskInput.value, complete: false  };
+        mainArray.push(newTask);
+        renderHTML(renderTask(newTask.text, counterIndex(), newTask.complete))
     }
 
     taskInput.value = '';
 }
 
+//создание обертки таска
+function renderTask (taskText, taskIndex, taskComplete) {
+
+    const newTask = templateElement.cloneNode(true);
+
+    const paragraph = newTask.querySelector('.task__text');
+    paragraph.textContent = taskText;
+
+    newTask.querySelector('.task__items').setAttribute('id', `task__id_${taskIndex}`)
+    newTask.querySelector('.task__deleted').setAttribute('onclick',`deleteTask(${taskIndex})`);
+    newTask.querySelector('.task__edit').setAttribute('onclick',`editTask(${taskIndex})`);
+    newTask.querySelector('.task__checkbox').setAttribute('onclick',`completeTask(${taskIndex})`);
+
+    const checkBox = newTask.querySelector('.task__checkbox');
+
+    if (taskComplete === true) {
+        checkBox.setAttribute('checked', 'checked')
+        paragraph.style.color = 'red';
+        paragraph.style.textDecoration = 'line-through';
+    }
+
+
+
+    return newTask;
+}
+
+
+// добавление таска в DOM
+function renderHTML (task, container = taskList) {
+    container.prepend(task)
+}
+
+// счетчик для индекса
+function counterIndex () {
+    let taskIndex = 0;
+
+    for (let i = 0; i < mainArray.length; i++) {
+        taskIndex = i;
+    }
+
+    return taskIndex;
+}
+
+// удалить всё
 function deleteAll() {
-    mainArray.splice(0,mainArray.length);
+    mainArray = [];
 
     taskInput.value = '';
 
-    renderTask();
+    taskList.innerHTML = '';
 }
 
-function deleteTask (index) {
+// удалить конекретный таск
+function deleteTask (taskIndex) {
     let resultArray = [];
 
     for (let i = 0; i < mainArray.length; i++) {
-        if (index !== i) {
+        if (taskIndex !== i) {
             resultArray.push(mainArray[i]);
         }
     }
 
     mainArray = resultArray;
 
-    renderTask();
+    taskList.innerHTML = '';
+
+    mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
 }
 
-function editTask (index) {
+//редактировать конкретный таск
+function editTask (taskIndex) {
 
-    const idItem = document.querySelector(`#task__div_${index}`);
-    const indexTextContent = idItem.querySelector('.task__item');
+    const idItem = document.querySelector(`#task__id_${taskIndex}`);
+    const indexTextContent = idItem.querySelector('.task__text');
     const indexInput = idItem.querySelector('.task__input');
     const editButton = idItem.querySelector('.task__edit');
-
+    const checkBox = idItem.querySelector('.task__checkbox');
 
     if (!indexTextContent.classList.contains('hidden-item')) {
         indexInput.value = indexTextContent.textContent;
         indexTextContent.classList.add('hidden-item');
+        checkBox.classList.add('hidden-item');
         indexInput.classList.remove('hidden-item');
         indexInput.focus()
         editButton.style.backgroundImage = 'url(bg-close-button.svg)';
     } else {
-        mainArray[index] = indexInput.value;
-        renderTask()
+        mainArray[taskIndex].text = indexInput.value;
+        taskList.innerHTML = '';
+        mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
+        checkBox.classList.remove('hidden-item');
     }
 
     indexInput.addEventListener('keydown', function(evt) {
         if (evt.keyCode === 13) {
-            mainArray[index] = indexInput.value;
-            renderTask()
+            mainArray[taskIndex].text = indexInput.value;
+            taskList.innerHTML = '';
+            mainArray.forEach((task, index) => renderHTML(renderTask(task.text, index, task.complete)));
+            checkBox.classList.remove('hidden-item');
         }
         if (evt.keyCode === 27) {
             indexTextContent.classList.remove('hidden-item');
             indexInput.classList.add('hidden-item');
+            checkBox.classList.remove('hidden-item');
         }
     });
 }
 
-/*function completeTask (index) {
+// чекбокс таска
+function completeTask (taskIndex) {
 
-    const idItem = document.querySelector(`#task__div_${index}`);
-    const indexTextContent = idItem.querySelector('.task__item');
+    const idItem = document.querySelector(`#task__id_${taskIndex}`);
+    const indexTextContent = idItem.querySelector('.task__text');
     const checkBox = idItem.querySelector('.task__checkbox');
 
-    checkBox.addEventListener('click', function () {
-        indexTextContent.style.color = 'red';
+    checkBox.addEventListener('change', function () {
+        if (checkBox.checked) {
+            mainArray[taskIndex].complete = true;
+            indexTextContent.style.color = 'red';
+            indexTextContent.style.textDecoration = 'line-through';
+        } else {
+            mainArray[taskIndex].complete = false;
+            indexTextContent.style.color = 'white';
+            indexTextContent.style.textDecoration = 'none';
+        }
     })
-}*/
+}
 
 
-taskForm.addEventListener('submit', addTask);
-cleaningList.addEventListener('click', deleteAll);
+taskForm.addEventListener('submit', addTask);  // кнопка добавление
+cleaningList.addEventListener('click', deleteAll); // кнопка удаления всего
+
