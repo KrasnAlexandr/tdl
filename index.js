@@ -24,7 +24,7 @@ function addTask (evt) {
 }
 
 // создание обертки таска
-function renderTask (taskText, taskIndex, status) {
+function renderTask (taskText, taskIndex, taskStatus) {
 
     const newTask = templateElement.cloneNode(true);
 
@@ -38,7 +38,7 @@ function renderTask (taskText, taskIndex, status) {
 
     const checkBox = newTask.querySelector('.task__checkbox');
 
-    if (status) {
+    if (taskStatus) {
         checkBox.setAttribute('checked', 'checked');
         paragraph.style.color = 'red';
         paragraph.style.textDecoration = 'line-through';
