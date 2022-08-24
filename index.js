@@ -5,7 +5,7 @@ const taskList = document.querySelector('.task__list'); // ul (контейне�
 
 const cleaningList = document.querySelector('.del-btn'); // кнопка удаления ВСЕХ тасков
 
-const templateElement = document.querySelector('.template').content;
+const templateElement = document.querySelector('.template').content; // шаблон
 
 let mainArray = []; // массив для тасков
 
