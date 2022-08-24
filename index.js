@@ -12,6 +12,7 @@ let mainArray = [
     { text: 'как вроде они пришли с сервера', done: true }
 ]; // массив для тасков
 
+console.log()
 renderAllTasks(mainArray);
 
 // т.к. у тасков меняется индекс после удаления, необходимо обновлять лист (я думаю, смогу ее переиспользовать, для создания списка задач под разные дела, например рабочие или домашние)
@@ -116,9 +117,6 @@ function editTask (taskIndex) {
 
         editButton.style.backgroundImage = 'url(bg-edit-button.svg)';
         editButton.textContent = '';
-
-        console.log(mainArray[taskIndex])
-        console.log(mainArray)
     }
 
 
@@ -137,8 +135,6 @@ function editTask (taskIndex) {
 
             editButton.style.backgroundImage = 'url(bg-edit-button.svg)';
             editButton.textContent = '';
-            console.log(mainArray[taskIndex])
-            console.log(mainArray)
         }
 
         if (evt.keyCode === 27) {
