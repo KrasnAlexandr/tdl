@@ -68,15 +68,7 @@ function deleteAll() {
 
 // удалить конекретный таск
 function deleteTask (taskIndex) {
-    let resultArray = [];
-
-    for (let i = 0; i < mainArray.length; i++) {
-        if (taskIndex !== i) {
-            resultArray.push(mainArray[i]);
-        }
-    }
-
-    mainArray = resultArray;
+    mainArray.splice(taskIndex,1)
 
     taskList.innerHTML = '';
 
